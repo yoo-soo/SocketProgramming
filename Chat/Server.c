@@ -61,7 +61,7 @@ int main(void)
     unsigned int port = 9897;
     servaddr.sin_port = htons(port);
 
-    // 소켓 생성 후, 소켓의 address와 port number를 묶어주는 역할
+    // 소켓 생성 후, 소켓의 IP address와 port number 설정
     ret = bind(sockfd, (struct sockaddr*)&servaddr, sizeof(servaddr));
     if ( ret != 0 )
     {
@@ -69,8 +69,7 @@ int main(void)
         exit(-1);
     }
 
-    // 수신 클라이언트 연결 수신
-    // backlog는 소켓에 연결하기 위해 들어가있는 큐의 크기
+    // 클라이언트의 접근 요청에 수신 대기열을 만들어 몇 개의 클라이언트를 대기시킬지 결정
     ret = listen(sockfd, 5); //6
     if ( ret != 0 )
     {
