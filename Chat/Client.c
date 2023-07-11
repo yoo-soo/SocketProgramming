@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 
-    // 소켓 생성
+    // 소켓 열기
 	sock = socket(PF_INET, SOCK_STREAM, 0);
 	if(sock == -1)
 		perror("socket() error");
@@ -30,7 +30,8 @@ int main(int argc, char *argv[])
 	serv_addr.sin_addr.s_addr = inet_addr(argv[1]);
 	serv_addr.sin_port = htons(atoi(argv[2]));
 
-    // IP와 port를 통해 서버 주소 초기화
+    // 통신할 서버의 설정된 IP와 Port 번호에 통신 시도
+    // 통신 시도 시, 서버가 accept() 함수를 통해 클라이언트의 socket description 반환
 	if(connect(sock, (struct sockaddr*)&serv_addr, sizeof(serv_addr)) == -1)
 		perror("connect() error!");
 	else
@@ -51,7 +52,8 @@ int main(int argc, char *argv[])
 		
         // 수신된 메시지가 null로 종료되고 콘솔에 출력됨
         message[str_len] = 0;
-		printf("Message from server : %s", message);
+
+		//printf("Message from server : %s", message);
 	} 
 	close(sock); // 클라이언트 소켓 닫기
 	return 0;
